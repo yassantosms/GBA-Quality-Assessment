@@ -1,25 +1,52 @@
 ---
 name: flow-quality-assessment
-description: "Roda um Quality Assessment de fluxos de produto do Nubank em 3 pilares complementares — Craft (Magic), User Experience Impact (Value) e Business Impact (tamanho) — e gera um dashboard HTML em inglês com nota por parâmetro, rationale auditável, evidência do fluxo (vídeo ou prints) ao lado dos main issues, e o mapa de quadrantes Star / Hidden Gem / Table Stakes / Skip. O fluxo entra via link do Figma, screen recording/vídeo da jornada (preferido para apuração), ou prints/telas. Cada parâmetro recebe uma nota que o Claude atribui lendo o fluxo contra a rubrica-âncora embutida (Anexo A). Pilar 1 e 2 usam escala 1–5; Pilar 3 usa 1/3/5 (target). Craft e Value cortam no 3 para posicionar o fluxo no mapa; Business Impact vira o tamanho do ponto. Roda parcial: só Craft (sem inputs extras), + Value (com JTBDs), + Business (com métricas). Suporta o mesmo fluxo em mais de um geo (BR/MX/CO) para comparativo. Escalável entre times: JTBDs e métricas são fornecidos pelo usuário; a rubrica é fixa. Use quando pedirem para avaliar a qualidade de um fluxo, rodar 'quality assessment', 'flow assessment', 'avaliar um fluxo', pontuar craft/UX/business de uma tela/jornada/Figma, ou posicionar fluxos no mapa de quadrantes. Trigger: 'quality assessment', 'avaliar fluxo', 'nota de qualidade do fluxo', 'craft score', 'star/hidden gem/table stakes/skip', link do Figma + JTBDs/metas, upload de telas/vídeo."
+version: "2026-09-04"
+canonical_repo: "https://github.com/yassantosms/GBA-Quality-Assessment"
+canonical_path: "flow-quality-assessment"
+canonical_url: "https://github.com/yassantosms/GBA-Quality-Assessment/tree/main/flow-quality-assessment"
+description: "Roda um Quality Assessment de fluxos de produto do Nubank em 3 pilares complementares — Craft (Magic), User Experience Impact e Business Impact (tamanho) — e gera um dashboard HTML em inglês com nota por parâmetro, rationale auditável, evidência do fluxo (vídeo ou prints) ao lado dos main issues, e o mapa de quadrantes Star / Hidden Gem / Table Stakes / Skip. O fluxo entra via link do Figma, screen recording/vídeo da jornada (preferido para apuração), ou prints/telas. Cada parâmetro recebe uma nota que o Claude atribui lendo o fluxo contra a rubrica-âncora embutida (Anexo A). Pilar 1 e 2 usam escala 1–5; Pilar 3 usa 1/3/5 (target). Craft e User Experience Impact cortam no 3 para posicionar o fluxo no mapa; Business Impact vira o tamanho do ponto. Roda parcial: só Craft (sem inputs extras), + User Experience Impact (com JTBDs), + Business Impact (com métricas). Antes de cada rodada, consulta o GitHub canônico se a skill local está atualizada. Suporta o mesmo fluxo em mais de um geo (BR/MX/CO) para comparativo. Escalável entre times: JTBDs e métricas são fornecidos pelo usuário; a rubrica é fixa. Use quando pedirem para avaliar a qualidade de um fluxo, rodar 'quality assessment', 'flow assessment', 'avaliar um fluxo', pontuar craft/UX/business de uma tela/jornada/Figma, ou posicionar fluxos no mapa de quadrantes. Trigger: 'quality assessment', 'avaliar fluxo', 'nota de qualidade do fluxo', 'craft score', 'star/hidden gem/table stakes/skip', link do Figma + JTBDs/metas, upload de telas/vídeo."
 ---
 
 ## O que esta skill faz
 
 Avalia a qualidade de um fluxo de produto do Nubank em **três pilares complementares** e entrega um **dashboard HTML em inglês** (padrão) em duas camadas: uma **folha-resumo** (médias por pilar + evidência do fluxo + main issues + mapa de quadrantes — pronta para stakeholders e multi-geo) e, abaixo, o **detalhe auditável** por parâmetro com rationale. O fluxo se posiciona no **mapa de quadrantes** (Star / Hidden Gem / Table Stakes / Skip).
 
+**Nomes oficiais dos pilares (use sempre estes no dashboard e na comunicação):**
+- Pilar 1 → **Craft** (eixo Magic)
+- Pilar 2 → **User Experience Impact** — **não** chame de “Customer Value”
+- Pilar 3 → **Business Impact** — **não** chame de “Business Metrics”
+
 **O diferencial:** a nota de cada parâmetro é atribuída por mim (Claude), lendo o fluxo e comparando o que observo com a **rubrica-âncora** de cada nível (1 a 5), embutida neste arquivo no **Anexo A**. Não é um checklist mecânico: eu leio as telas, entendo a jornada e justifico cada nota contra a descrição do nível correspondente.
 
 **Escalável entre times:** a rubrica (Anexo A) é fixa e vale para qualquer time. O que varia por produto/BU são os **JTBDs** (alimentam o Pilar 2) e as **métricas de negócio** (alimentam o Pilar 3) — e esses dois vêm do usuário no início da sessão. Por isso a skill não guarda JTBDs nem métricas: ela pergunta.
+
+## Version check (obrigatório a cada execução)
+
+**Antes de coletar inputs ou pontuar**, a skill **deve** conferir se a cópia local está alinhada com o repositório canônico:
+
+- **Repo:** https://github.com/yassantosms/GBA-Quality-Assessment/tree/main/flow-quality-assessment
+- **Raw SKILL.md:** https://raw.githubusercontent.com/yassantosms/GBA-Quality-Assessment/main/flow-quality-assessment/SKILL.md
+- **Raw VERSION (se existir):** https://raw.githubusercontent.com/yassantosms/GBA-Quality-Assessment/main/flow-quality-assessment/VERSION
+
+### Como checar
+1. Leia o campo `version` do frontmatter deste `SKILL.md` local (hoje: `2026-09-04`) e/ou o arquivo local `VERSION`, se houver.
+2. Busque a versão remota (`gh api`, `curl`, ou WebFetch) no `SKILL.md` / `VERSION` do GitHub acima.
+3. Compare:
+   - Se **remoto == local** → siga normalmente (pode mencionar em uma linha que a skill está atualizada).
+   - Se **remoto > local** (versão ou conteúdo mais novo) → **atualize a skill local** copiando `SKILL.md`, `README.md`, `VERSION` e `assets/` do repo para `~/.cursor/skills/flow-quality-assessment/` (ou o path ativo da skill), avise a pessoa (“Updated skill from GitHub to version X”), **releia** o `SKILL.md` atualizado e só então continue o assessment.
+   - Se não conseguir acessar o GitHub → avise que o version check falhou e pergunte se quer seguir com a cópia local; não bloqueie a rodada.
+
+Nunca invente que está atualizado sem ter consultado o remoto nesta sessão.
 
 ## Os três pilares
 
 | Pilar | Nome | Papel no mapa | Escala | Nº de parâmetros |
 |---|---|---|---|---|
 | 1 | **Craft** | Eixo horizontal → **Magic** | 1–5 | 6 |
-| 2 | **User Experience Impact** | Eixo vertical → **Value** | 1–5 | 3 |
+| 2 | **User Experience Impact** | Eixo vertical → **User Experience Impact** | 1–5 | 3 |
 | 3 | **Business Impact** | **Tamanho do ponto** | 1 / 3 / 5 | 1 por métrica informada |
 
-A rubrica completa de cada parâmetro (a descrição de cada nível de nota) está no **Anexo A**. Ela é a fonte de verdade — sempre atribua a nota casando o que você observa no fluxo com o texto do nível. Nunca invente parâmetros novos nem renomeie os existentes.
+A rubrica completa de cada parâmetro (a descrição de cada nível de nota) está no **Anexo A**. Ela é a fonte de verdade — sempre atribua a nota casando o que você observa no fluxo com o texto do nível. Nunca invente parâmetros novos nem renomeie os existentes. **Não use os nomes legados “Customer Value” ou “Business Metrics”** no dashboard nem na fala com a pessoa.
 
 ## Os inputs do usuário
 
@@ -30,12 +57,12 @@ Antes de avaliar, apresente ao usuário o que a skill precisa e **o que ela cons
 | Pilar | Input necessário | Roda sem ele? |
 |---|---|---|
 | **Craft** (Magic) | Só o fluxo (Figma, vídeo e/ou prints) | ✅ Sim — Craft roda sozinho |
-| **User Experience Impact** (Value) | Fluxo **+ JTBDs** | ❌ Precisa dos JTBDs |
+| **User Experience Impact** | Fluxo **+ JTBDs** | ❌ Precisa dos JTBDs |
 | **Business Impact** (tamanho) | **Métricas** (nome + target + stretch + reported) | ❌ Precisa das métricas |
 
 **No início, diga isso ao usuário** (em PT ou EN conforme a língua da conversa), e **sempre mencione o valor do vídeo**:
 
-> Posso rodar só o Craft agora se você me der o fluxo. Para Customer Value preciso dos JTBDs, e para Business Impact das métricas (target, stretch e realizado).
+> Posso rodar só o Craft agora se você me der o fluxo. Para User Experience Impact preciso dos JTBDs, e para Business Impact das métricas (target, stretch e realizado).
 >
 > **Com um vídeo/screen recording da jornada a apuração fica ainda melhor** — dá para ver motion, loading, overlaps, timing e o caminho real ponta a ponta (além de Figma ou prints). Me diz o que você já tem.
 
@@ -55,11 +82,11 @@ Rode com o que houver e deixe claro no dashboard o que ficou de fora.
 
 Em todos os casos, leia de verdade cada tela/frame e entenda a jornada ponta a ponta antes de pontuar.
 
-### 2. Os JTBDs do fluxo (para o Pilar 2)
-Peça o JTBD principal e os secundários, se houver. Os JTBDs podem mudar de fluxo para fluxo — pergunte a cada assessment, mesmo que já tenha vindo antes. Sem JTBDs, não pontue o Pilar 2; rode Craft (e Business, se houver métricas) e marque Value como não avaliado.
+### 2. Os JTBDs do fluxo (para o Pilar 2 — User Experience Impact)
+Peça o JTBD principal e os secundários, se houver. Os JTBDs podem mudar de fluxo para fluxo — pergunte a cada assessment, mesmo que já tenha vindo antes. Sem JTBDs, não pontue o Pilar 2; rode Craft (e Business Impact, se houver métricas) e marque **User Experience Impact** como não avaliado.
 
-### 3. As métricas de negócio (para o Pilar 3)
-Para **cada** métrica, peça: **nome** (ex.: % activation, Conversion (eligible/active), MAU/MEAU, Recurrent buyers/Engagement, Market share, PV/AUC/AUM, IFP/NNM — lista não-exaustiva, adaptável por time), **target**, **stretch target** e **número reportado** (realizado). Sem target e reported, marque o Pilar 3 como não avaliado. Use exatamente os números informados; nunca estime metas nem realizados.
+### 3. As métricas de negócio (para o Pilar 3 — Business Impact)
+Para **cada** métrica, peça: **nome** (ex.: % activation, Conversion (eligible/active), MAU/MEAU, Recurrent buyers/Engagement, Market share, PV/AUC/AUM, IFP/NNM — lista não-exaustiva, adaptável por time), **target**, **stretch target** e **número reportado** (realizado). Sem target e reported, marque o Pilar 3 (**Business Impact**) como não avaliado. Use exatamente os números informados; nunca estime metas nem realizados.
 
 ### Multi-geo (comparativo, opcional)
 Um mesmo fluxo pode existir em mais de uma região (BR/MX/CO) com implementações diferentes. Se o usuário fornecer o fluxo para mais de um geo, avalie cada geo separadamente e mostre o comparativo lado a lado (scores por pilar e posição no mapa). Mantenha simples: uma avaliação por geo, plotadas no mesmo mapa. Não force multi-geo quando o usuário só trouxe um.
@@ -92,8 +119,11 @@ Quando o fluxo vier por Figma, liste os componentes NuDS V3 detectados e **cruze
 
 ## Passo a passo
 
+### 0. Version check (sempre primeiro)
+Consulte o GitHub canônico (seção **Version check**) e atualize a skill local se o remoto estiver mais novo. Só depois avance.
+
 ### 1. Coletar os inputs disponíveis
-Confirme o que o usuário tem: o fluxo (Figma, **vídeo/screen recording**, e/ou prints), JTBDs (para Value) e métricas (para Business). **No pitch inicial, diga explicitamente que com vídeo da jornada a apuração é ainda melhor.** Explique o que dá para rodar com o que há (ver "Os inputs do usuário"). Rode parcial se for o caso — Craft roda sozinho.
+Confirme o que o usuário tem: o fluxo (Figma, **vídeo/screen recording**, e/ou prints), JTBDs (para User Experience Impact) e métricas (para Business Impact). **No pitch inicial, diga explicitamente que com vídeo da jornada a apuração é ainda melhor.** Explique o que dá para rodar com o que há (ver "Os inputs do usuário"). Rode parcial se for o caso — Craft roda sozinho.
 
 ### 2. Ler o fluxo
 - **Se veio vídeo:** extraia frames ao longo da timeline; leia loading, transitions, overlaps e o caminho real. Guarde o arquivo de mídia junto do HTML de output para embutir na coluna Evidence.
@@ -115,7 +145,7 @@ Para **cada** um dos 3 parâmetros (JTBD Efficiency, Customer Clarity, Trust):
 - Use os **JTBDs informados pelo usuário** como referência — especialmente em JTBD Efficiency, avalie se o JTBD principal (e os secundários) se completa com passos mínimos, baixa carga cognitiva e sem becos sem saída.
 - Escolha o nível no **Anexo A**, atribua a **nota (1–5)** e escreva o **rationale** citando o JTBD e a evidência no fluxo.
 
-**Value score (Customer Value) = média simples das 3 notas.**
+**User Experience Impact score = média simples das 3 notas.**
 
 ### 5. Pontuar o Pilar 3 — Business Impact (escala 1/3/5, por métrica)
 Para **cada** métrica informada, compare o **número reportado** com o **target** e o **stretch**:
@@ -128,33 +158,34 @@ Use exatamente os números que o usuário informou. **Não invente números, tar
 **Business Impact score = média simples das notas das métricas.** Esse score vira o **tamanho do ponto** no mapa.
 
 ### 6. Posicionar no mapa de quadrantes
-Cruze **Craft (eixo X, Magic)** × **Value (eixo Y, Customer Value)**, com **corte fixo em 3** nos dois eixos:
+Cruze **Craft (eixo X, Magic)** × **User Experience Impact (eixo Y)**, com **corte fixo em 3** nos dois eixos:
 
 | Quadrante | Condição | Leitura |
 |---|---|---|
-| **Star** (↑Magic · ↑Value) | Craft ≥ 3 **e** Value ≥ 3 | Alto valor estratégico + alta qualidade de craft. Os fluxos ideais. |
-| **Hidden Gem** (↓Magic · ↑Value) | Craft < 3 **e** Value ≥ 3 | Alto valor, craft baixo hoje. Fortes candidatos a melhoria/investimento. |
-| **Table Stakes** (↑Magic · ↓Value) | Craft ≥ 3 **e** Value < 3 | Craft forte, valor relativo menor. Pedem manutenção, não grande investimento novo. |
-| **Skip** (↓Magic · ↓Value) | Craft < 3 **e** Value < 3 | Baixo valor e baixo craft. Repensar, simplificar ou despriorizar. |
+| **Star** (↑Magic · ↑UX Impact) | Craft ≥ 3 **e** User Experience Impact ≥ 3 | Alto valor estratégico + alta qualidade de craft. Os fluxos ideais. |
+| **Hidden Gem** (↓Magic · ↑UX Impact) | Craft < 3 **e** User Experience Impact ≥ 3 | Alto valor, craft baixo hoje. Fortes candidatos a melhoria/investimento. |
+| **Table Stakes** (↑Magic · ↓UX Impact) | Craft ≥ 3 **e** User Experience Impact < 3 | Craft forte, valor relativo menor. Pedem manutenção, não grande investimento novo. |
+| **Skip** (↓Magic · ↓UX Impact) | Craft < 3 **e** User Experience Impact < 3 | Baixo valor e baixo craft. Repensar, simplificar ou despriorizar. |
 
 O **tamanho do ponto** reflete o Business Impact score. Com corte fixo em 3, a skill funciona para **um fluxo isolado**; quando houver vários fluxos, plote todos no mesmo mapa.
 
 ### 7. Sintetizar main issues (antes do HTML)
-Antes de montar o dashboard, extraia **3–6 main issues** do assessment — problemas transversais do fluxo, **não** uma lista por pilar/parâmetro. Cada issue em uma linha acionável (o que está quebrado + por que importa). Priorize o que mais move Craft, Value ou Business. Esses issues alimentam a **folha-resumo** (ver Dashboard).
+Antes de montar o dashboard, extraia **3–6 main issues** do assessment — problemas transversais do fluxo, **não** uma lista por pilar/parâmetro. Cada issue em uma linha acionável (o que está quebrado + por que importa). Priorize o que mais move Craft, User Experience Impact ou Business Impact. Esses issues alimentam a **folha-resumo** (ver Dashboard).
 
 ### 8. Gerar o dashboard HTML
 Monte um dashboard HTML auto-contido (ver seção "Dashboard"). Salve em `outputs/` (ou caminho equivalente da sessão) e apresente ao usuário.
 - **Idioma padrão: inglês (EN).** Toda a UI do dashboard (labels, issues, rationales, âncoras resumidas, captions) sai em EN, a menos que o usuário peça explicitamente PT (ou outro idioma).
+- **Labels de pilar no dashboard:** use exatamente **Craft**, **User Experience Impact**, **Business Impact**. Nunca “Customer Value” nem “Business Metrics”.
 - **Evidence no summary:** copie o vídeo (preferir `.mp4` para playback amplo; `.mov` como fallback) e/ou prints para a mesma pasta do HTML e embuta com paths relativos.
-- **Rodada parcial:** mostre apenas os pilares avaliados e sinalize claramente os não avaliados (ex.: "Customer Value — not assessed: JTBDs not provided"). Se só Craft rodou, mostre o Craft score na folha-resumo; o mapa de quadrantes precisa de Craft **e** Value, então só desenhe o mapa quando ambos existirem.
-- **Multi-geo:** plote um ponto por geo no mesmo mapa e, na folha-resumo, uma **tabela comparativa só com scores por pilar** (Craft / Value / Business) entre BR/MX/CO — sem quebrar parâmetros nessa visão.
+- **Rodada parcial:** mostre apenas os pilares avaliados e sinalize claramente os não avaliados (ex.: "User Experience Impact — not assessed: JTBDs not provided"). Se só Craft rodou, mostre o Craft score na folha-resumo; o mapa de quadrantes precisa de Craft **e** User Experience Impact, então só desenhe o mapa quando ambos existirem.
+- **Multi-geo:** plote um ponto por geo no mesmo mapa e, na folha-resumo, uma **tabela comparativa só com scores por pilar** (Craft / User Experience Impact / Business Impact) entre BR/MX/CO — sem quebrar parâmetros nessa visão.
 
 ## Regras de pontuação (idênticas para qualquer time)
 
 - **A rubrica do Anexo A é a régua.** Sempre escolha o nível cuja descrição corresponde ao observado; não pontue "por impressão" sem casar com o texto do nível.
 - **Média simples** em todos os agregados (dentro de cada pilar e por métrica). Nunca aplique pesos, a menos que o usuário peça explicitamente.
 - **Corte dos quadrantes é fixo em 3** nos dois eixos (≥3 = alto ↑; <3 = baixo ↓).
-- **Craft e Value são eixos separados** — nunca colapse os três pilares numa nota única. O output preserva Craft, Value e Business Impact como três dimensões.
+- **Craft e User Experience Impact são eixos separados** — nunca colapse os três pilares numa nota única. O output preserva Craft, User Experience Impact e Business Impact como três dimensões.
 - **Protagonismo da média do pilar.** Na comunicação e no dashboard, a **média do pilar** é o número principal. Quebras por parâmetro/métrica existem para auditoria e aprofundamento — não para a leitura de stakeholders. Ao comparar fluxos ou o mesmo fluxo entre países, compare **sempre** as médias de pilar primeiro.
 - **Business Impact usa só 1/3/5** (não notas intermediárias), derivadas da comparação reported × target × stretch.
 - **Rationale obrigatório por parâmetro** — é o que torna o assessment auditável. Cada nota vem com a evidência que a sustenta. Rationale detalhado fica na camada de detalhe, não na folha-resumo.
@@ -169,17 +200,17 @@ Dashboard HTML único, auto-contido, responsivo. **UI em inglês por padrão.** 
 Entrega valor rápido. Contém agregados, evidência e issues gerais:
 
 1. **Header**: flow name, country/BU (if provided), assessment date, and the resulting **quadrant** badge.
-2. **Pillar scores (lead)**: Craft (Magic), Customer Value, Business Impact — each with the **pillar average** in large type, scale, and one-line reading (do not list parameters here). In multi-geo, show a **comparative table of pillar averages × country** on this sheet.
+2. **Pillar scores (lead)**: Craft (Magic), User Experience Impact, Business Impact — each with the **pillar average** in large type, scale, and one-line reading (do not list parameters here). In multi-geo, show a **comparative table of pillar averages × country** on this sheet.
 3. **Summary row (padrão de layout)** — três colunas lado a lado:
    - **Evidence (esquerda):** vídeo do fluxo embutido (`<video controls>` com `.mp4` + fallback `.mov`) **ou**, se não houver vídeo, print(s) representativo(s) da jornada. Caption curta da sequência observada. Arquivos de mídia na mesma pasta do HTML (paths relativos).
    - **Main issues (centro):** lista curta (3–6) dos principais problemas do fluxo **no geral**, não agrupados por pilar. Linguagem acionável, pronta para apresentação (em EN).
-   - **Quadrant map (direita):** scatter com eixo X = Craft, eixo Y = Value, linhas de corte em 3, quadrantes rotulados (Star / Hidden Gem / Table Stakes / Skip), ponto dimensionado pelo Business Impact. Vários fluxos/geos = vários pontos no mesmo mapa.
+   - **Quadrant map (direita):** scatter com eixo X = Craft (Magic), eixo Y = User Experience Impact, linhas de corte em 3, quadrantes rotulados (Star / Hidden Gem / Table Stakes / Skip), ponto dimensionado pelo Business Impact. Vários fluxos/geos = vários pontos no mesmo mapa.
 4. Responsivo: em viewports estreitas, empilhar Evidence → Issues → Map.
 
 ### Camada 2 — Detalhe auditável (secundária)
 Aprofundamento opcional; visualmente subordinada à folha-resumo (seção inferior, tipografia menor, ou `<details>` recolhido por padrão):
 
-5. **Quebra por parâmetro dentro de cada pilar**: nota (1–5), rótulo do nível (Not Ready / Partially Ready / Baseline / Strong / Superb) e **rationale** (EN). Pilar 3: métrica, target, stretch, reported e nota 1/3/5.
+5. **Quebra por parâmetro dentro de cada pilar**: nota (1–5), rótulo do nível (Not Ready / Partially Ready / Baseline / Strong / Superb) e **rationale** (EN). Seções de detalhe: **Audit detail · Craft**, **Audit detail · User Experience Impact**, **Audit detail · Business Impact** (nunca “Business Metrics”). Pilar 3: métrica, target, stretch, reported e nota 1/3/5.
 6. **Âncora da rubrica**: ao lado de cada nota, a descrição do nível do Anexo A usada como âncora (pode permanecer no inglês da rubrica oficial).
 
 **Hierarquia visual obrigatória:** médias de pilar ≫ (evidence + issues + map) ≫ quebra por parâmetro. Nunca inverta — a primeira tela/viewport da folha-resumo não deve competir com tabelas de parâmetros.
@@ -294,15 +325,15 @@ Para cada métrica, compare o número reportado com o target definido:
 
 ## Anexo B — Como ler os scores e o mapa
 
-Para Craft e Customer Value, avalia-se cada fluxo com uma nota por critério e chega-se a uma média (Craft = média dos 6 parâmetros; Customer Value = média dos 3). Cruzando os dois scores, posiciona-se o fluxo num chart:
+Para Craft e User Experience Impact, avalia-se cada fluxo com uma nota por critério e chega-se a uma média (Craft = média dos 6 parâmetros; User Experience Impact = média dos 3). Cruzando os dois scores, posiciona-se o fluxo num chart:
 
 - **Eixo horizontal: Craft** (Magic)
-- **Eixo vertical: Customer Value** (Value)
+- **Eixo vertical: User Experience Impact**
 - **Business Impact: refletido no tamanho do ponto**
 
 Quadrantes (corte em 3 nos dois eixos):
 
-- **01 · Star (↑Magic · ↑Value):** Experiences with high strategic value and high craft quality. These are the ideal flows: important to the business and to users, while also delivering a polished, coherent, and refined experience.
-- **02 · Hidden Gem (↓Magic · ↑Value):** Experiences with high value but low craft quality today. These flows matter strategically or are heavily used, but the experience is still underperforming — making them strong candidates for improvement and investment.
-- **03 · Table Stakes (↑Magic · ↓Value):** Experiences with strong craft quality but lower relative value on the map. They are well executed, but less critical than other strategic flows, so they usually call for maintenance rather than major new investment.
-- **04 · Skip (↓Magic · ↓Value):** Experiences with low value and low craft quality. These typically do not justify significant incremental investment in their current form and may need to be rethought, simplified, or deprioritized.
+- **01 · Star (↑Magic · ↑UX Impact):** Experiences with high strategic value and high craft quality. These are the ideal flows: important to the business and to users, while also delivering a polished, coherent, and refined experience.
+- **02 · Hidden Gem (↓Magic · ↑UX Impact):** Experiences with high value but low craft quality today. These flows matter strategically or are heavily used, but the experience is still underperforming — making them strong candidates for improvement and investment.
+- **03 · Table Stakes (↑Magic · ↓UX Impact):** Experiences with strong craft quality but lower relative value on the map. They are well executed, but less critical than other strategic flows, so they usually call for maintenance rather than major new investment.
+- **04 · Skip (↓Magic · ↓UX Impact):** Experiences with low value and low craft quality. These typically do not justify significant incremental investment in their current form and may need to be rethought, simplified, or deprioritized.

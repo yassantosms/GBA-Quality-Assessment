@@ -40,7 +40,8 @@
     "user_experience_impact": {
       "name": "User Experience Impact",
       "axis": "y",
-      "axis_label": "Customer Value",
+      "axis_label": "User Experience Impact",
+      "legacy_names_do_not_use": ["Customer Value", "Value"],
       "scale": [1, 2, 3, 4, 5],
       "requires_input": "jtbds",
       "parameters": [
@@ -52,6 +53,7 @@
     "business_impact": {
       "name": "Business Impact",
       "encoding": "point_size",
+      "legacy_names_do_not_use": ["Business Metrics"],
       "scale": [1, 3, 5],
       "requires_input": "business_metrics",
       "level_labels": {
